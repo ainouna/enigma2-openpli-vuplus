@@ -6,8 +6,8 @@
 #include <lib/gdi/lcd.h>
 #include "gpixmap.h"
 
-#ifndef LCD_DEV
-# define LCD_DEV "/dev/fb1"
+#ifndef FBIO_WAITFORVSYNC
+#define FBIO_WAITFORVSYNC _IOW('F', 0x20, uint32_t)
 #endif
 
 class eFbLCD: public eLCD
@@ -30,7 +30,7 @@ class eFbLCD: public eLCD
 			// low level gfx stuff
 	int putCMAP();
 public:
-	eFbLCD(const char *fb=LCD_DEV);
+	eFbLCD(const char *fb="/dev/fb1");
 	~eFbLCD();
 	bool detected() { return m_available; }
 	eSize size() { return eSize(m_xRes, m_yRes); }
@@ -38,6 +38,7 @@ public:
 	int waitVSync();
 	int setLCDContrast(int contrast) { return 0; };
 	int setLCDBrightness(int brightness);
+	int setLED(int value, int option) { return 0; };
 	void setInverted( unsigned char ) {};
 	void setFlipped(bool) {};
 	bool isOled() const { return 0; };
@@ -45,6 +46,7 @@ public:
 	int lock();
 	void unlock();
 	int islocked() { return locked; }
+	void setDump(bool) {}
 };
 
 #endif
