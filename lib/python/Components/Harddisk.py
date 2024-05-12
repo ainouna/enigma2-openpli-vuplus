@@ -75,17 +75,17 @@ class Harddisk:
 			tmp = readFile(self.sysfsPath('dev')).split(':')
 			s_major = int(tmp[0])
 			s_minor = int(tmp[1])
-			for disc in os.listdir("/dev/discs"):
-				dev_path = os.path.realpath('/dev/discs/' + disc)
-				disk_path = dev_path + '/disc'
-				try:
-					rdev = os.stat(disk_path).st_rdev
-				except OSError:
-					continue
-				if s_major == os.major(rdev) and s_minor == os.minor(rdev):
-					self.dev_path = dev_path
-					self.disk_path = disk_path
-					break
+#			for disc in os.listdir("/dev/discs"):
+#				dev_path = os.path.realpath('/dev/discs/' + disc)
+#				disk_path = dev_path + '/disc'
+#				try:
+#					rdev = os.stat(disk_path).st_rdev
+#				except OSError:
+#					continue
+#				if s_major == os.major(rdev) and s_minor == os.minor(rdev):
+#					self.dev_path = dev_path
+#					self.disk_path = disk_path
+#					break
 
 		print "new Harddisk", self.device, '->', self.dev_path, '->', self.disk_path
 		if not removable:
